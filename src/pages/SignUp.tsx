@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/lib/auth';
+import { isSupabaseConfigured } from '@/lib/supabase';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Boxes, Mail, Lock, User, AlertCircle } from 'lucide-react';
@@ -50,6 +51,12 @@ export function SignUp() {
         </div>
 
         <div className="card p-8">
+          {!isSupabaseConfigured && (
+            <div className="mb-5 flex items-center gap-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-400">
+              <AlertCircle size={18} />
+              Missing Supabase config. Copy `.env.example` to `.env` and set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+            </div>
+          )}
           {error && (
             <div className="mb-5 flex items-center gap-2.5 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
               <AlertCircle size={18} />

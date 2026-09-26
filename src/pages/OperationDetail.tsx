@@ -1,16 +1,15 @@
 import { useEffect, useState, useCallback } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/Button';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { ArrowLeft, CheckCircle2, XCircle, Printer, Plus, Trash2, AlertTriangle, Check } from 'lucide-react';
 import type { Operation, OperationLine, Product, Location, Profile, OperationType, OperationStatus } from '@/lib/types';
-import { OPERATION_LABELS, STATUS_LABELS, STATUS_ORDER } from '@/lib/types';
+import { OPERATION_LABELS, STATUS_LABELS } from '@/lib/types';
 
 export function OperationDetail() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { profile } = useAuth();
   const [op, setOp] = useState<Operation | null>(null);
   const [lines, setLines] = useState<OperationLine[]>([]);

@@ -54,6 +54,29 @@
   }
 }
 
+.splash-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 35%, transparent 75%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-splash-logo,
+  .animate-splash-ring,
+  .animate-splash-letter,
+  .animate-splash-bar,
+  .animate-splash-orbit,
+  .animate-splash-orbit-rev,
+  .animate-splash-pulse-glow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    width: 100% !important;
+  }
+}
+
 @media print {
   body * {
     visibility: hidden;

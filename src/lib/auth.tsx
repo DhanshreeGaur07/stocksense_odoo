@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 import type { Profile } from '@/lib/types';
 
 interface AuthContextValue {
@@ -21,14 +21,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      if (data.session) {
-        loadProfile(data.session.user.id);
-      } else {
+    if (!isSupabaseConfigured) {
+      setLoading(false);
+      return;
+    }
+
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        setSession(data.session);
+        if (data.session) {
+          loadProfile(data.session.user.id);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch(() => {
         setLoading(false);
-      }
-    });
+      });
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);

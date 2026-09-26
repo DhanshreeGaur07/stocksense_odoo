@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { Layout } from '@/components/Layout';
+import { StartupScreen } from '@/components/StartupScreen';
 import { Login } from '@/pages/Login';
 import { SignUp } from '@/pages/SignUp';
 import { Dashboard } from '@/pages/Dashboard';
@@ -54,11 +56,16 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const [showStartup, setShowStartup] = useState(true);
+
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </AuthProvider>
+    <>
+      {showStartup && <StartupScreen onComplete={() => setShowStartup(false)} />}
+      <AuthProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthProvider>
+    </>
   );
 }

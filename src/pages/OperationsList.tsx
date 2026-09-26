@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/auth';
 import { Button } from '@/components/ui/Button';
 import { ViewToggle } from '@/components/ui/ViewToggle';
 import { StatusBadge } from '@/components/ui/StatusBadge';
@@ -182,7 +183,7 @@ function NewOperationModal({
   onClose: () => void;
   onCreated: () => void;
 }) {
-  const { profile } = useAuthSafe();
+  const { profile } = useAuth();
   const [contact, setContact] = useState('');
   const [scheduledDate, setScheduledDate] = useState('');
   const [sourceLoc, setSourceLoc] = useState('');
@@ -415,9 +416,4 @@ function NewOperationModal({
       </div>
     </div>
   );
-}
-
-import { useAuth } from '@/lib/auth';
-function useAuthSafe() {
-  return useAuth();
 }
